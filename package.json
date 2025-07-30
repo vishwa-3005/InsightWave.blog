@@ -1,0 +1,19 @@
+{
+  "name": "insightwave",
+  "version": "1.0.0",
+  "description": "a complete frontend for a blog website with appwrite as backend api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishwa-3005/InsightWave.blog.git"
+  },
+  "author": "vishwadeep sankpal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vishwa-3005/InsightWave.blog/issues"
+  },
+  "homepage": "https://github.com/vishwa-3005/InsightWave.blog#readme"
+}
