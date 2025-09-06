@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Login as authLogin } from "../store/authSlice";
+import { login as authLogin } from "../store/authSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handelSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
   const login = async (data) => {
@@ -24,7 +24,7 @@ function Login() {
         }
       }
     } catch (error) {
-      setError(error.message);
+      setError(error?.message || "something wwnt wrong");
     }
   };
 
@@ -51,7 +51,7 @@ function Login() {
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={handelSubmit(login)}>
+        <form onSubmit={handleSubmit(login)}>
           <div>
             <Input
               label="Email: "
@@ -60,7 +60,7 @@ function Login() {
               {...register("email", {
                 required: true,
                 validate: {
-                  matchPatern: (value) =>
+                  matchPattern: (value) =>
                     /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
                     "Email address must be a valid address",
                 },

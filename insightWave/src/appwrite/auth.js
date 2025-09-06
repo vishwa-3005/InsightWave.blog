@@ -1,13 +1,12 @@
 import config from "../conf/conf.js";
-
 import { Client, Account, ID } from "appwrite";
 
-export class AuthService {
-  client = new Client();
+class AuthService {
+  client;
   account;
 
   constructor() {
-    this.client
+    this.client = new Client()
       .setEndpoint(config.appwriteUrl)
       .setProject(config.appwriteProjectId);
 
@@ -22,15 +21,12 @@ export class AuthService {
         password,
         name
       );
-
       if (userAccount) {
-        //if userAccount is created then login directly
-
-        return this.login({ email, password });
-      } else {
-        return userAccount;
+        return await this.login({ email, password });
       }
+      return userAccount;
     } catch (error) {
+      console.error("AuthService :: createAccount :: error", error);
       throw error;
     }
   }
@@ -39,22 +35,25 @@ export class AuthService {
     try {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
+      console.error("AuthService :: login :: error", error);
       throw error;
     }
   }
 
   async getCurrentUser() {
     try {
-      return await account.get();
+      return await this.account.get();
     } catch (error) {
-      throw error;
+      console.warn("AuthService :: getCurrentUser :: no active session", error);
+      return null;
     }
   }
 
   async logout() {
     try {
-      return await account.deleteSessions();
+      return await this.account.deleteSessions();
     } catch (error) {
+      console.error("AuthService :: logout :: error", error);
       throw error;
     }
   }
