@@ -6,21 +6,21 @@ import { Button, Input, Logo } from "./index.js";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
-function Signup() {
-  const navigate = useNavigate();
+function SignUp() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
   const create = async (data) => {
     setError("");
     try {
+      // create account
       const userData = await authService.createAccount(data);
-      if (userData) {
-        const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(userData));
-        navigate("/");
-      }
+      //if created update store
+      if (userData) dispatch(login(userData));
+      //redirect to home page
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }
@@ -90,4 +90,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignUp;
